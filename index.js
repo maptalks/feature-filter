@@ -2,7 +2,7 @@
 
 module.exports = createFilter;
 
-var types = ['Unknown', 'Point', 'LineString', 'Polygon'];
+var types = ['Unknown', 'Point', 'LineString', 'Polygon', 'MultiPoint', 'MultiLineString', 'MultiPolygon', 'GeometryCollection'];
 
 /**
  * Given a filter expressed as nested arrays, return a new function
