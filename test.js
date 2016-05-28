@@ -417,3 +417,10 @@ test('!has', function(t) {
     t.equal(f({properties: {}}), true);
     t.end();
 });
+
+test('==, $id', function(t) {
+    var f = filter(['==', '$id', 1]);
+    t.equal(f({id: 1}), true);
+    t.equal(f({id: 2}), false);
+    t.end();
+});
