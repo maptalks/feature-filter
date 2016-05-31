@@ -41,6 +41,7 @@ function compile(filter) {
 function compilePropertyReference(property) {
     return property === '$type' ? 'f.type' :
             property === '$id' ? 'f.id' :
+            property === '$subType' ? 'f.subType' :
             'p[' + JSON.stringify(property) + ']';
 }
 
