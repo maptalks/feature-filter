@@ -1,6 +1,6 @@
 ## Filter
 
-[![CircleCI](https://circleci.com/gh/MapTalks/feature-filter.svg?style=svg)](https://circleci.com/gh/MapTalks/feature-filter)
+[![CircleCI](https://circleci.com/gh/maptalks/feature-filter.svg?style=svg)](https://circleci.com/gh/maptalks/feature-filter)
 
 Filter expressions are used to target specific data in a layer. This library implements the semantics specified by the [Mapbox GL JS spec](https://www.mapbox.com/mapbox-gl-style-spec/#filter).
 
