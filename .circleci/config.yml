@@ -38,6 +38,3 @@ jobs:
       # run tests!
       - run: npm test
       - run: bash <(curl -s https://codecov.io/bash)
-
-
-z
