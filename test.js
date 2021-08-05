@@ -1,5 +1,5 @@
 import expect from 'expect.js';
-import { createFilter as filter } from './index.js';
+import { createFilter as filter } from './src/index.js';
 /*!
     Feature Filter by
 

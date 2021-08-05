@@ -1,8 +1,16 @@
 {
   "name": "@maptalks/feature-filter",
-  "version": "1.0.0",
-  "main": "./index.js",
-  "module": "./index.js",
+  "version": "1.1.0",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "unpkg": "dist/index.js",
+  "commonjs": "dist/index.cjs.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    }
+  },
   "description": "Creates filtering function for features",
   "dependencies": {},
   "devDependencies": {
@@ -11,10 +19,13 @@
     "eslint-plugin-mocha": "^5.1.0",
     "esm": "^3.0.64",
     "expect.js": "^0.3.1",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "bili": "^5.0.5"
   },
   "scripts": {
-    "pretest": "eslint index.js test.js",
+    "dev": "bili --watch",
+    "build": "bili",
+    "pretest": "eslint src/index.js test.js",
     "test": "mocha -r esm test.js"
   },
   "repository": {
