@@ -438,4 +438,10 @@ describe('FeatureFilter', function () {
         expect(f({ subType: 'Circle' })).not.to.be.ok();
 
     });
+
+    it('test, regex', function () {
+        var f = filter(['test', 'foo', 'bar*']);
+        expect(f({ properties: { foo: 'bar' }})).to.be.ok();
+
+    });
 });

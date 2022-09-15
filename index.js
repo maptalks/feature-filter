@@ -37,8 +37,14 @@ function compile(filter) {
                                     op === '!in' ? compileNegation(compileInOp(filter[1], filter.slice(2))) :
                                         op === 'has' ? compileHasOp(filter[1]) :
                                             op === '!has' ? compileNegation(compileHasOp(filter[1])) :
-                                                'true';
+                                                op === 'test' ? compileRegex(filter[1], filter[2]) :
+                                                    'true';
     return `(${str})`;
+}
+
+function compileRegex(property, regex) {
+    const prop = compilePropertyReference(property);
+    return `new RegExp("${regex}").test(${prop})`;
 }
 
 function compilePropertyReference(property) {

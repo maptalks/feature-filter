@@ -3,19 +3,19 @@
   "version": "1.0.0",
   "main": "./index.js",
   "module": "./index.js",
+  "type": "module",
   "description": "Creates filtering function for features",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^5.0.1",
     "eslint-config-maptalks": "^0.2.1",
     "eslint-plugin-mocha": "^5.1.0",
-    "esm": "^3.0.64",
     "expect.js": "^0.3.1",
-    "mocha": "^5.2.0"
+    "mocha": "^10.0.0"
   },
   "scripts": {
     "pretest": "eslint index.js test.js",
-    "test": "mocha -r esm test.js"
+    "test": "mocha test.js"
   },
   "repository": {
     "type": "git",
