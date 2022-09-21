@@ -395,8 +395,6 @@ describe('FeatureFilter', function () {
 
         var f4 = filter(['none', ['==', 'foo', 0], ['==', 'foo', 1]]);
         expect(f4({ properties: { foo: 1 }})).not.to.be.ok();
-
-
     });
 
     it('has', function () {
@@ -439,9 +437,21 @@ describe('FeatureFilter', function () {
 
     });
 
-    it('test, regex', function () {
-        var f = filter(['test', 'foo', 'bar*']);
-        expect(f({ properties: { foo: 'bar' }})).to.be.ok();
+    // it('test, regex', function () {
+    //     var f = filter(['test', 'foo', 'bar*']);
+    //     expect(f({ properties: { foo: 'bar' }})).to.be.ok();
 
+    // });
+
+    it('contains, item', function () {
+        var f = filter(['contains', 'foo', 'bar']);
+        expect(f({ properties: { foo: '1b0ar2' }})).not.to.be.ok();
+        expect(f({ properties: { foo: '1bar2' }})).to.be.ok();
+    });
+
+    it('contains, item at start', function () {
+        var f = filter(['contains', 'foo', 'bar', 0]);
+        expect(f({ properties: { foo: '1bar21' }})).not.to.be.ok();
+        expect(f({ properties: { foo: 'bar21' }})).to.be.ok();
     });
 });
