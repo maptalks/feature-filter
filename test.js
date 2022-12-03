@@ -454,4 +454,48 @@ describe('FeatureFilter', function () {
         expect(f({ properties: { foo: '1bar21' }})).not.to.be.ok();
         expect(f({ properties: { foo: 'bar21' }})).to.be.ok();
     });
+
+    const prop = { properties: { name: 123 }};
+
+    it('len>', function () {
+        var f = filter(['len>', 'name', 1]);
+        expect(f(prop)).to.be.ok();
+
+        var f1 = filter(['len>', 'name', 4]);
+        expect(f1(prop)).not.to.be.ok();
+    });
+
+    it('len>=', function () {
+        var f = filter(['len>=', 'name', 2]);
+        expect(f(prop)).to.be.ok();
+        var f1 = filter(['len>=', 'name', 4]);
+        expect(f1(prop)).not.to.be.ok();
+
+    });
+
+
+    it('len==', function () {
+        var f = filter(['len==', 'name', 3]);
+        expect(f(prop)).to.be.ok();
+
+        var f1 = filter(['len==', 'name', 2]);
+        expect(f1(prop)).not.to.be.ok();
+    });
+
+    it('len<', function () {
+        var f = filter(['len<', 'name', 5]);
+        expect(f(prop)).to.be.ok();
+
+        var f1 = filter(['len<', 'name', 2]);
+        expect(f1(prop)).not.to.be.ok();
+    });
+    it('len<=', function () {
+
+        var f = filter(['len<=', 'name', 5]);
+        expect(f(prop)).to.be.ok();
+
+        var f1 = filter(['len<=', 'name', 2]);
+        expect(f1(prop)).not.to.be.ok();
+    });
+
 });

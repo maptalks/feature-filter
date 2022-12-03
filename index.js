@@ -28,8 +28,8 @@ function compile(filter) {
             op === '!=' ? compileComparisonOp(filter[1], filter[2], '!==', false) :
                 op === '<' ||
                     op === '>' ||
-        op === '<=' ||
-        op === '>=' ? compileComparisonOp(filter[1], filter[2], op, true) :
+                    op === '<=' ||
+                    op === '>=' ? compileComparisonOp(filter[1], filter[2], op, true) :
                     op === 'any' ? compileLogicalOp(filter.slice(1), '||') :
                         op === 'all' ? compileLogicalOp(filter.slice(1), '&&') :
                             op === 'none' ? compileNegation(compileLogicalOp(filter.slice(1), '||')) :
@@ -39,8 +39,26 @@ function compile(filter) {
                                             op === '!has' ? compileNegation(compileHasOp(filter[1])) :
                                                 // op === 'test' ? compileRegex(filter[1], filter[2]) :
                                                 op === 'contains' ? compileContains(filter[1], filter[2], filter[3]) :
-                                                    'true';
+                                                    (op === 'len>' || op === 'len>=' || op === 'len==' || op === 'len<' || op === 'len<=') ? compileLength(filter[1], filter[2], op) :
+                                                        'true';
     return `(${str})`;
+}
+
+function compileLength(property, num, op) {
+    let prop = compilePropertyReference(property);
+    let str = `(${prop}+='').length`;
+    let compare = `===${num}`;
+    if (op === 'len>') {
+        compare = `>${num}`;
+    } else if (op === 'len>=') {
+        compare = `>=${num}`;
+    } else if (op === 'len<') {
+        compare = `<${num}`;
+    } else if (op === 'len<=') {
+        compare = `<=${num}`;
+    }
+    return (str += compare);
+
 }
 
 function compileContains(property, str, index) {
@@ -143,7 +161,7 @@ export function compileStyle(styles) {
             filter = createFilter(styles[i]['filter']);
         }
         compiled.push(extend({}, styles[i], {
-            filter : filter
+            filter: filter
         }));
     }
     return compiled;
