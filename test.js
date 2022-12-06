@@ -455,47 +455,54 @@ describe('FeatureFilter', function () {
         expect(f({ properties: { foo: 'bar21' }})).to.be.ok();
     });
 
-    const prop = { properties: { name: 123 }};
+    const feature = { properties: { name: 123 }};
+    const proWidthFun = { property: 'name', op: 'length' };
 
-    it('len>', function () {
-        var f = filter(['len>', 'name', 1]);
-        expect(f(prop)).to.be.ok();
+    it('> with length fun', function () {
+        var f = filter(['>', proWidthFun, 1]);
+        expect(f(feature)).to.be.ok();
 
-        var f1 = filter(['len>', 'name', 4]);
-        expect(f1(prop)).not.to.be.ok();
+        var f1 = filter(['>', proWidthFun, 4]);
+        expect(f1(feature)).not.to.be.ok();
     });
 
-    it('len>=', function () {
-        var f = filter(['len>=', 'name', 2]);
-        expect(f(prop)).to.be.ok();
-        var f1 = filter(['len>=', 'name', 4]);
-        expect(f1(prop)).not.to.be.ok();
+    it('>= with length fun', function () {
+        var f = filter(['>=', proWidthFun, 3]);
+        expect(f(feature)).to.be.ok();
 
+        var f1 = filter(['>=', proWidthFun, 4]);
+        expect(f1(feature)).not.to.be.ok();
     });
 
+    it('< with length fun', function () {
+        var f = filter(['<', proWidthFun, 5]);
+        expect(f(feature)).to.be.ok();
 
-    it('len==', function () {
-        var f = filter(['len==', 'name', 3]);
-        expect(f(prop)).to.be.ok();
-
-        var f1 = filter(['len==', 'name', 2]);
-        expect(f1(prop)).not.to.be.ok();
+        var f1 = filter(['<', proWidthFun, 2]);
+        expect(f1(feature)).not.to.be.ok();
     });
 
-    it('len<', function () {
-        var f = filter(['len<', 'name', 5]);
-        expect(f(prop)).to.be.ok();
+    it('<= with length fun', function () {
+        var f = filter(['<=', proWidthFun, 3]);
+        expect(f(feature)).to.be.ok();
 
-        var f1 = filter(['len<', 'name', 2]);
-        expect(f1(prop)).not.to.be.ok();
+        var f1 = filter(['<=', proWidthFun, 2]);
+        expect(f1(feature)).not.to.be.ok();
     });
-    it('len<=', function () {
 
-        var f = filter(['len<=', 'name', 5]);
-        expect(f(prop)).to.be.ok();
+    it('== with length fun', function () {
+        var f = filter(['==', proWidthFun, 3]);
+        expect(f(feature)).to.be.ok();
 
-        var f1 = filter(['len<=', 'name', 2]);
-        expect(f1(prop)).not.to.be.ok();
+        var f1 = filter(['==', proWidthFun, 4]);
+        expect(f1(feature)).not.to.be.ok();
+    });
+    it('!= with length fun', function () {
+        var f = filter(['!=', proWidthFun, 1]);
+        expect(f(feature)).to.be.ok();
+
+        var f1 = filter(['!=', proWidthFun, 3]);
+        expect(f1(feature)).not.to.be.ok();
     });
 
 });

@@ -7,6 +7,10 @@
 */
 const types = ['Unknown', 'Point', 'LineString', 'Polygon', 'MultiPoint', 'MultiLineString', 'MultiPolygon', 'GeometryCollection'];
 
+function isObject(obj) {
+    return typeof obj === 'object' && !!obj;
+}
+
 /**
  * Given a filter expressed as nested arrays, return a new function
  * that evaluates whether a given feature (with a .properties or .tags property)
@@ -39,25 +43,23 @@ function compile(filter) {
                                             op === '!has' ? compileNegation(compileHasOp(filter[1])) :
                                                 // op === 'test' ? compileRegex(filter[1], filter[2]) :
                                                 op === 'contains' ? compileContains(filter[1], filter[2], filter[3]) :
-                                                    (op === 'len>' || op === 'len>=' || op === 'len==' || op === 'len<' || op === 'len<=') ? compileLength(filter[1], filter[2], op) :
-                                                        'true';
+                                                    'true';
     return `(${str})`;
 }
 
-function compileLength(property, num, op) {
-    let prop = compilePropertyReference(property);
-    let str = `(${prop}+='').length`;
-    let compare = `===${num}`;
-    if (op === 'len>') {
-        compare = `>${num}`;
-    } else if (op === 'len>=') {
-        compare = `>=${num}`;
-    } else if (op === 'len<') {
-        compare = `<${num}`;
-    } else if (op === 'len<=') {
-        compare = `<=${num}`;
+function compileFunction(propertyObj, value, op, checkType) {
+    const property = propertyObj.property, funName = propertyObj.op;
+    let left = compilePropertyReference(property);
+    if (funName === 'length') {
+        left = `((${left}+='').length)`;
+    } else {
+        // TODO
+        //  other functions
+        console.error(`not support ${funName} op`);
+        return 'false';
     }
-    return (str += compare);
+    let right = property === '$type' ? types.indexOf(value) : JSON.stringify(value);
+    return (checkType ? `typeof ${left}=== typeof ${right}&&` : '') + left + op + right;
 
 }
 
@@ -84,6 +86,9 @@ function compilePropertyReference(property) {
 }
 
 function compileComparisonOp(property, value, op, checkType) {
+    if (isObject(property) && property.op) {
+        return compileFunction(property, value, op, checkType);
+    }
     const left = compilePropertyReference(property);
     const right = property === '$type' ? types.indexOf(value) : JSON.stringify(value);
     return (checkType ? `typeof ${left}=== typeof ${right}&&` : '') + left + op + right;
