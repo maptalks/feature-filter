@@ -456,52 +456,52 @@ describe('FeatureFilter', function () {
     });
 
     const feature = { properties: { name: 123 }};
-    const proWidthFun = { property: 'name', op: 'length' };
+    const proWithfun = { property: 'name', op: 'length' };
 
     it('> with length fun', function () {
-        var f = filter(['>', proWidthFun, 1]);
+        var f = filter(['>', proWithfun, 1]);
         expect(f(feature)).to.be.ok();
 
-        var f1 = filter(['>', proWidthFun, 4]);
+        var f1 = filter(['>', proWithfun, 4]);
         expect(f1(feature)).not.to.be.ok();
     });
 
     it('>= with length fun', function () {
-        var f = filter(['>=', proWidthFun, 3]);
+        var f = filter(['>=', proWithfun, 3]);
         expect(f(feature)).to.be.ok();
 
-        var f1 = filter(['>=', proWidthFun, 4]);
+        var f1 = filter(['>=', proWithfun, 4]);
         expect(f1(feature)).not.to.be.ok();
     });
 
     it('< with length fun', function () {
-        var f = filter(['<', proWidthFun, 5]);
+        var f = filter(['<', proWithfun, 5]);
         expect(f(feature)).to.be.ok();
 
-        var f1 = filter(['<', proWidthFun, 2]);
+        var f1 = filter(['<', proWithfun, 2]);
         expect(f1(feature)).not.to.be.ok();
     });
 
     it('<= with length fun', function () {
-        var f = filter(['<=', proWidthFun, 3]);
+        var f = filter(['<=', proWithfun, 3]);
         expect(f(feature)).to.be.ok();
 
-        var f1 = filter(['<=', proWidthFun, 2]);
+        var f1 = filter(['<=', proWithfun, 2]);
         expect(f1(feature)).not.to.be.ok();
     });
 
     it('== with length fun', function () {
-        var f = filter(['==', proWidthFun, 3]);
+        var f = filter(['==', proWithfun, 3]);
         expect(f(feature)).to.be.ok();
 
-        var f1 = filter(['==', proWidthFun, 4]);
+        var f1 = filter(['==', proWithfun, 4]);
         expect(f1(feature)).not.to.be.ok();
     });
     it('!= with length fun', function () {
-        var f = filter(['!=', proWidthFun, 1]);
+        var f = filter(['!=', proWithfun, 1]);
         expect(f(feature)).to.be.ok();
 
-        var f1 = filter(['!=', proWidthFun, 3]);
+        var f1 = filter(['!=', proWithfun, 3]);
         expect(f1(feature)).not.to.be.ok();
     });
 
