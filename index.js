@@ -58,8 +58,7 @@ function compileFunction(propertyObj, value, op, checkType) {
         console.error(`not support ${funName} op`);
         return 'false';
     }
-    let right = property === '$type' ? types.indexOf(value) : JSON.stringify(value);
-    return (checkType ? `typeof ${left}=== typeof ${right}&&` : '') + left + op + right;
+    return getComparisonCode(left, property, value, op, checkType);
 
 }
 
@@ -90,6 +89,10 @@ function compileComparisonOp(property, value, op, checkType) {
         return compileFunction(property, value, op, checkType);
     }
     const left = compilePropertyReference(property);
+    return getComparisonCode(left, property, value, op, checkType);
+}
+
+function getComparisonCode(left, property, value, op, checkType) {
     const right = property === '$type' ? types.indexOf(value) : JSON.stringify(value);
     return (checkType ? `typeof ${left}=== typeof ${right}&&` : '') + left + op + right;
 }
