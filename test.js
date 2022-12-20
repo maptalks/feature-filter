@@ -1,5 +1,5 @@
 import expect from 'expect.js';
-import { createFilter as filter } from './index.js';
+import { createFilter as filter, isFeatureFilter } from './index.js';
 /*!
     Feature Filter by
 
@@ -18,14 +18,18 @@ describe('FeatureFilter', function () {
     });
 
     it('==, string', function () {
-        var f = filter(['==', 'foo', 'bar']);
+        var condition = ['==', 'foo', 'bar'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 'bar' }})).to.be.ok();
         expect(f({ properties: { foo: 'baz' }})).not.to.be.ok();
 
     });
 
     it('==, number', function () {
-        var f = filter(['==', 'foo', 0]);
+        var condition = ['==', 'foo', 0];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).to.be.ok();
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
         expect(f({ properties: { foo: '0' }})).not.to.be.ok();
@@ -38,7 +42,9 @@ describe('FeatureFilter', function () {
     });
 
     it('==, null', function () {
-        var f = filter(['==', 'foo', null]);
+        var condition = ['==', 'foo', null];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
         expect(f({ properties: { foo: '0' }})).not.to.be.ok();
@@ -51,21 +57,27 @@ describe('FeatureFilter', function () {
     });
 
     it('==, $type', function () {
-        var f = filter(['==', '$type', 'LineString']);
+        var condition = ['==', '$type', 'LineString'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ type: 1 })).not.to.be.ok();
         expect(f({ type: 2 })).to.be.ok();
 
     });
 
     it('!=, string', function () {
-        var f = filter(['!=', 'foo', 'bar']);
+        var condition = ['!=', 'foo', 'bar'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 'bar' }})).not.to.be.ok();
         expect(f({ properties: { foo: 'baz' }})).to.be.ok();
 
     });
 
     it('!=, number', function () {
-        var f = filter(['!=', 'foo', 0]);
+        var condition = ['!=', 'foo', 0];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: 1 }})).to.be.ok();
         expect(f({ properties: { foo: '0' }})).to.be.ok();
@@ -78,7 +90,9 @@ describe('FeatureFilter', function () {
     });
 
     it('!=, null', function () {
-        var f = filter(['!=', 'foo', null]);
+        var condition = ['!=', 'foo', null];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).to.be.ok();
         expect(f({ properties: { foo: 1 }})).to.be.ok();
         expect(f({ properties: { foo: '0' }})).to.be.ok();
@@ -91,14 +105,18 @@ describe('FeatureFilter', function () {
     });
 
     it('!=, $type', function () {
-        var f = filter(['!=', '$type', 'LineString']);
+        var condition = ['!=', '$type', 'LineString'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ type: 1 })).to.be.ok();
         expect(f({ type: 2 })).not.to.be.ok();
 
     });
 
     it('<, number', function () {
-        var f = filter(['<', 'foo', 0]);
+        var condition = ['<', 'foo', 0];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: -1 }})).to.be.ok();
@@ -114,7 +132,9 @@ describe('FeatureFilter', function () {
     });
 
     it('<, string', function () {
-        var f = filter(['<', 'foo', '0']);
+        var condition = ['<', 'foo', '0'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: -1 }})).not.to.be.ok();
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
@@ -129,7 +149,9 @@ describe('FeatureFilter', function () {
     });
 
     it('<=, number', function () {
-        var f = filter(['<=', 'foo', 0]);
+        var condition = ['<=', 'foo', 0];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
         expect(f({ properties: { foo: 0 }})).to.be.ok();
         expect(f({ properties: { foo: -1 }})).to.be.ok();
@@ -145,7 +167,9 @@ describe('FeatureFilter', function () {
     });
 
     it('<=, string', function () {
-        var f = filter(['<=', 'foo', '0']);
+        var condition = ['<=', 'foo', '0'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: -1 }})).not.to.be.ok();
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
@@ -160,7 +184,9 @@ describe('FeatureFilter', function () {
     });
 
     it('>, number', function () {
-        var f = filter(['>', 'foo', 0]);
+        var condition = ['>', 'foo', 0];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 1 }})).to.be.ok();
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: -1 }})).not.to.be.ok();
@@ -176,7 +202,9 @@ describe('FeatureFilter', function () {
     });
 
     it('>, string', function () {
-        var f = filter(['>', 'foo', '0']);
+        var condition = ['>', 'foo', '0'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: -1 }})).not.to.be.ok();
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
@@ -191,7 +219,9 @@ describe('FeatureFilter', function () {
     });
 
     it('>=, number', function () {
-        var f = filter(['>=', 'foo', 0]);
+        var condition = ['>=', 'foo', 0];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 1 }})).to.be.ok();
         expect(f({ properties: { foo: 0 }})).to.be.ok();
         expect(f({ properties: { foo: -1 }})).not.to.be.ok();
@@ -207,7 +237,9 @@ describe('FeatureFilter', function () {
     });
 
     it('>=, string', function () {
-        var f = filter(['>=', 'foo', '0']);
+        var condition = ['>=', 'foo', '0'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: -1 }})).not.to.be.ok();
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
@@ -222,13 +254,17 @@ describe('FeatureFilter', function () {
     });
 
     it('in, degenerate', function () {
-        var f = filter(['in', 'foo']);
+        var condition = ['in', 'foo'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
 
     });
 
     it('in, string', function () {
-        var f = filter(['in', 'foo', '0']);
+        var condition = ['in', 'foo', '0'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: '0' }})).to.be.ok();
         expect(f({ properties: { foo: true }})).not.to.be.ok();
@@ -240,7 +276,9 @@ describe('FeatureFilter', function () {
     });
 
     it('in, number', function () {
-        var f = filter(['in', 'foo', 0]);
+        var condition = ['in', 'foo', 0];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).to.be.ok();
         expect(f({ properties: { foo: '0' }})).not.to.be.ok();
         expect(f({ properties: { foo: true }})).not.to.be.ok();
@@ -251,7 +289,9 @@ describe('FeatureFilter', function () {
     });
 
     it('in, null', function () {
-        var f = filter(['in', 'foo', null]);
+        var condition = ['in', 'foo', null];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: '0' }})).not.to.be.ok();
         expect(f({ properties: { foo: true }})).not.to.be.ok();
@@ -262,7 +302,9 @@ describe('FeatureFilter', function () {
     });
 
     it('in, multiple', function () {
-        var f = filter(['in', 'foo', 0, 1]);
+        var condition = ['in', 'foo', 0, 1];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).to.be.ok();
         expect(f({ properties: { foo: 1 }})).to.be.ok();
         expect(f({ properties: { foo: 3 }})).not.to.be.ok();
@@ -270,7 +312,9 @@ describe('FeatureFilter', function () {
     });
 
     it('in, large_multiple', function () {
-        var f = filter(['in', 'foo'].concat(Array.apply(null, { length: 2000 }).map(Number.call, Number)));
+        var condition = ['in', 'foo'].concat(Array.apply(null, { length: 2000 }).map(Number.call, Number));
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).to.be.ok();
         expect(f({ properties: { foo: 1 }})).to.be.ok();
         expect(f({ properties: { foo: 1999 }})).to.be.ok();
@@ -279,7 +323,9 @@ describe('FeatureFilter', function () {
     });
 
     it('in, $type', function () {
-        var f = filter(['in', '$type', 'LineString', 'Polygon']);
+        var condition = ['in', '$type', 'LineString', 'Polygon'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ type: 1 })).not.to.be.ok();
         expect(f({ type: 2 })).to.be.ok();
         expect(f({ type: 3 })).to.be.ok();
@@ -293,13 +339,17 @@ describe('FeatureFilter', function () {
     });
 
     it('!in, degenerate', function () {
-        var f = filter(['!in', 'foo']);
+        var condition = ['!in', 'foo'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 1 }})).to.be.ok();
 
     });
 
     it('!in, string', function () {
-        var f = filter(['!in', 'foo', '0']);
+        var condition = ['!in', 'foo', '0'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).to.be.ok();
         expect(f({ properties: { foo: '0' }})).not.to.be.ok();
         expect(f({ properties: { foo: null }})).to.be.ok();
@@ -309,7 +359,9 @@ describe('FeatureFilter', function () {
     });
 
     it('!in, number', function () {
-        var f = filter(['!in', 'foo', 0]);
+        var condition = ['!in', 'foo', 0];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: '0' }})).to.be.ok();
         expect(f({ properties: { foo: null }})).to.be.ok();
@@ -318,7 +370,9 @@ describe('FeatureFilter', function () {
     });
 
     it('!in, null', function () {
-        var f = filter(['!in', 'foo', null]);
+        var condition = ['!in', 'foo', null];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).to.be.ok();
         expect(f({ properties: { foo: '0' }})).to.be.ok();
         expect(f({ properties: { foo: null }})).not.to.be.ok();
@@ -327,7 +381,9 @@ describe('FeatureFilter', function () {
     });
 
     it('!in, multiple', function () {
-        var f = filter(['!in', 'foo', 0, 1]);
+        var condition = ['!in', 'foo', 0, 1];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
         expect(f({ properties: { foo: 3 }})).to.be.ok();
@@ -335,7 +391,9 @@ describe('FeatureFilter', function () {
     });
 
     it('!in, large_multiple', function () {
-        var f = filter(['!in', 'foo'].concat(Array.apply(null, { length: 2000 }).map(Number.call, Number)));
+        var condition = ['!in', 'foo'].concat(Array.apply(null, { length: 2000 }).map(Number.call, Number));
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
         expect(f({ properties: { foo: 1999 }})).not.to.be.ok();
@@ -344,7 +402,9 @@ describe('FeatureFilter', function () {
     });
 
     it('!in, $type', function () {
-        var f = filter(['!in', '$type', 'LineString', 'Polygon']);
+        var condition = ['!in', '$type', 'LineString', 'Polygon'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ type: 1 })).to.be.ok();
         expect(f({ type: 2 })).not.to.be.ok();
         expect(f({ type: 3 })).not.to.be.ok();
@@ -352,16 +412,24 @@ describe('FeatureFilter', function () {
     });
 
     it('any', function () {
-        var f1 = filter(['any']);
+        var condition1 = ['any'];
+        expect(isFeatureFilter(condition1)).to.be.ok();
+        var f1 = filter(condition1);
         expect(f1({ properties: { foo: 1 }})).not.to.be.ok();
 
-        var f2 = filter(['any', ['==', 'foo', 1]]);
+        var condition2 = ['any', ['==', 'foo', 1]];
+        expect(isFeatureFilter(condition2)).to.be.ok();
+        var f2 = filter(condition2);
         expect(f2({ properties: { foo: 1 }})).to.be.ok();
 
-        var f3 = filter(['any', ['==', 'foo', 0]]);
+        var condition3 = ['any', ['==', 'foo', 0]];
+        expect(isFeatureFilter(condition3)).to.be.ok();
+        var f3 = filter(condition3);
         expect(f3({ properties: { foo: 1 }})).not.to.be.ok();
 
-        var f4 = filter(['any', ['==', 'foo', 0], ['==', 'foo', 1]]);
+        var condition4 = ['any', ['==', 'foo', 0], ['==', 'foo', 1]];
+        expect(isFeatureFilter(condition4)).to.be.ok();
+        var f4 = filter(condition4);
         expect(f4({ properties: { foo: 1 }})).to.be.ok();
 
 
@@ -398,7 +466,9 @@ describe('FeatureFilter', function () {
     });
 
     it('has', function () {
-        var f = filter(['has', 'foo']);
+        var condition = ['has', 'foo'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).to.be.ok();
         expect(f({ properties: { foo: 1 }})).to.be.ok();
         expect(f({ properties: { foo: '0' }})).to.be.ok();
@@ -411,7 +481,9 @@ describe('FeatureFilter', function () {
     });
 
     it('!has', function () {
-        var f = filter(['!has', 'foo']);
+        var condition = ['!has', 'foo'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: 0 }})).not.to.be.ok();
         expect(f({ properties: { foo: 1 }})).not.to.be.ok();
         expect(f({ properties: { foo: '0' }})).not.to.be.ok();
@@ -424,33 +496,35 @@ describe('FeatureFilter', function () {
     });
 
     it('==, $id', function () {
-        var f = filter(['==', '$id', 1]);
+        var condition = ['==', '$id', 1];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ id: 1 })).to.be.ok();
         expect(f({ id: 2 })).not.to.be.ok();
 
     });
 
     it('==, $subType', function () {
-        var f = filter(['==', '$subType', 'Label']);
+        var condition = ['==', '$subType', 'Label'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ subType: 'Label' })).to.be.ok();
         expect(f({ subType: 'Circle' })).not.to.be.ok();
 
     });
 
-    // it('test, regex', function () {
-    //     var f = filter(['test', 'foo', 'bar*']);
-    //     expect(f({ properties: { foo: 'bar' }})).to.be.ok();
-
-    // });
-
     it('contains, item', function () {
-        var f = filter(['contains', 'foo', 'bar']);
+        var condition = ['contains', 'foo', 'bar'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: '1b0ar2' }})).not.to.be.ok();
         expect(f({ properties: { foo: '1bar2' }})).to.be.ok();
     });
 
     it('contains, item at start', function () {
-        var f = filter(['contains', 'foo', 'bar', 0]);
+        var condition = ['contains', 'foo', 'bar', 0];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
         expect(f({ properties: { foo: '1bar21' }})).not.to.be.ok();
         expect(f({ properties: { foo: 'bar21' }})).to.be.ok();
     });
@@ -459,7 +533,10 @@ describe('FeatureFilter', function () {
     const proWithfun = { property: 'name', op: 'length' };
 
     it('> with length fun', function () {
-        var f = filter(['>', proWithfun, 1]);
+        var condition1 = ['>', proWithfun, 1];
+        expect(isFeatureFilter(condition1)).to.be.ok();
+
+        var f = filter(condition1);
         expect(f(feature)).to.be.ok();
 
         var f1 = filter(['>', proWithfun, 4]);

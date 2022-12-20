@@ -23,6 +23,43 @@ export function createFilter(filter) {
     return new Function('f', `var p = (f && f.properties || {}); return ${compile(filter)}`);
 }
 
+export function isFeatureFilter(filter) {
+    if (filter === true || filter === false) {
+        return true;
+    }
+    if (!Array.isArray(filter) || filter.length === 0) {
+        return false;
+    }
+    switch (filter[0]) {
+    case 'has':
+    case '!has':
+        return filter.length === 2 && (typeof filter[1] === 'string' || filter[1].property && filter[1].op);
+    case 'in':
+    case '!in':
+        return filter.length >= 2 && (typeof filter[1] === 'string' || filter[1].property && filter[1].op);
+    case '==':
+    case '!=':
+    case '>':
+    case '>=':
+    case '<':
+    case '<=':
+        return filter.length === 3 && (typeof filter[1] === 'string' || filter[1].property && filter[1].op);
+    case 'none':
+    case 'any':
+    case 'all':
+        for (const f of filter.slice(1)) {
+            if (!isFeatureFilter(f) && typeof f !== 'boolean') {
+                return false;
+            }
+        }
+        return true;
+    case 'contains':
+        return true;
+    default:
+        return false;
+    }
+}
+
 function compile(filter) {
     if (!filter) return 'true';
     const op = filter[0];
