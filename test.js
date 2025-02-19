@@ -26,6 +26,15 @@ describe('FeatureFilter', function () {
 
     });
 
+    it('==, chinese string', function () {
+        var condition = ['==', 'foo', '中文'];
+        expect(isFeatureFilter(condition)).to.be.ok();
+        var f = filter(condition);
+        expect(f({ properties: { foo: '中文' }})).to.be.ok();
+        expect(f({ properties: { foo: 'baz' }})).not.to.be.ok();
+
+    });
+
     it('==, number', function () {
         var condition = ['==', 'foo', 0];
         expect(isFeatureFilter(condition)).to.be.ok();
